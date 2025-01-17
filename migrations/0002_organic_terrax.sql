@@ -1,0 +1,1 @@
+ALTER TABLE "users" ADD COLUMN "library_card_url" text NOT NULL;
