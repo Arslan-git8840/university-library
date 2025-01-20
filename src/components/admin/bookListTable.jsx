@@ -1,3 +1,4 @@
+'use client';
 import {
     Table,
     TableBody,
@@ -10,9 +11,33 @@ import {
 import React from "react";
 import { Trash2, Edit3 } from "lucide-react";
 import { Button } from "../ui/button";
-import BookCover from "../BookCard";
+import BookCover from "@/components/BookCover2";
+import { toast } from "@/hooks/use-toast";
+import { bookToDelete } from "@/lib/drizzleActions";
+import EditForm from "./editform";
 
-function BookListTable() {
+function BookListTable({ bookList }) {
+    const deleteBook = async (id) => {
+        const response = await bookToDelete(id);
+        if (response.success) {
+            const date = new Date();
+            const deleteDate = date.toLocaleDateString('en-US', {
+                weekday: "long",
+                year: "numeric",
+                day: 'numeric',
+                month: "long"
+            })
+            toast({
+                title: "Book deleted successfully!",
+                description: deleteDate,
+            })
+        } else {
+            toast({
+                title: "Book deletion failed!",
+                description: "Book has not been deleted",
+            })
+        }
+    }
     return (
         <Table>
             <TableCaption>A list of books in your library.</TableCaption>
@@ -26,58 +51,50 @@ function BookListTable() {
                 </TableRow>
             </TableHeader>
             <TableBody>
-                <TableRow>
-                    <TableCell className="font-medium text-base flex items-center space-x-6 whitespace-nowrap w-[200px]">
-                        <BookCover
-                            coverUrl="/books/covers/React_in_Action_lEnUcul5_.jpg?updatedAt=1737001284754"
-                            coverColor="#302428"
-                        />
-                        <span>React Basics</span>
-                    </TableCell>
-                    <TableCell className="w-[150px] whitespace-nowrap">John Doe</TableCell>
-                    <TableCell className="w-[150px] whitespace-nowrap">Programming</TableCell>
-                    <TableCell className="w-[150px] whitespace-nowrap">2024-01-10</TableCell>
-                    <TableCell className="w-[150px] text-right whitespace-nowrap">
-                        <Button
-                            className="text-blue-500 hover:text-blue-700"
-                            aria-label="Edit"
-                        >
-                            <Edit3 className="h-5 w-5" />
-                        </Button>
-                        <Button
-                            className="text-red-500 hover:text-red-700 ml-2"
-                            aria-label="Delete"
-                        >
-                            <Trash2 className="h-5 w-5" />
-                        </Button>
-                    </TableCell>
-                </TableRow>
-                <TableRow>
-                    <TableCell className="font-medium text-base flex items-center space-x-6 whitespace-nowrap w-[200px]">
-                        <BookCover
-                            coverUrl="/books/covers/React_in_Action_lEnUcul5_.jpg?updatedAt=1737001284754"
-                            coverColor="#302428"
-                        />
-                        <span>CSS Mastery</span>
-                    </TableCell>
-                    <TableCell className="w-[150px] whitespace-nowrap">Jane Smith</TableCell>
-                    <TableCell className="w-[150px] whitespace-nowrap">Design</TableCell>
-                    <TableCell className="w-[150px] whitespace-nowrap">2023-11-15</TableCell>
-                    <TableCell className="w-[150px] text-right whitespace-nowrap">
-                        <Button
-                            className="text-blue-500 hover:text-blue-700"
-                            aria-label="Edit"
-                        >
-                            <Edit3 className="h-5 w-5" />
-                        </Button>
-                        <Button
-                            className="text-red-500 hover:text-red-700 ml-2"
-                            aria-label="Delete"
-                        >
-                            <Trash2 className="h-5 w-5" />
-                        </Button>
-                    </TableCell>
-                </TableRow>
+                {bookList.map((book) => {
+                    const date = new Date(book.createdAt);
+                    const createdAt = date.toLocaleDateString('en-US', {
+                        weekday: 'long', // Day of the week (e.g., Monday)
+                        year: 'numeric',
+                        month: 'long', // Full month name (e.g., January)
+                        day: 'numeric'
+                    });
+                    return (
+                        <TableRow key={book.id}>
+                            <TableCell className="font-medium text-base flex items-center space-x-6 whitespace-nowrap ">
+                                <div className="w-[64px]">
+                                    <BookCover
+                                        coverImage={book.coverUrl}
+                                        coverColor={book.coverColor}
+                                    />
+                                </div>
+
+                                <span>{book.title}</span>
+                            </TableCell>
+                            <TableCell className="w-[100px]">{book.author}</TableCell>
+                            <TableCell className="w-[150px] whitespace-nowrap">{book.genre}</TableCell>
+                            <TableCell className="w-[150px] whitespace-nowrap">{createdAt}</TableCell>
+                            <TableCell className="w-[150px] text-right whitespace-nowrap">
+                                {/* <Button
+                                    className="text-blue-500 hover:text-blue-700"
+                                    aria-label="Edit"
+                                >
+                                    <Edit3 className="h-5 w-5" />
+                                </Button> */}
+
+                                <EditForm id={book.id}/>
+
+                                <Button
+                                    className="text-red-500 hover:text-red-700 ml-2"
+                                    aria-label="Delete"
+                                    onClick={() => deleteBook(book.id)}
+                                >
+                                    <Trash2 className="h-5 w-5" />
+                                </Button>
+                            </TableCell>
+                        </TableRow>
+                    )
+                })}
             </TableBody>
         </Table>
     );

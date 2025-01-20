@@ -1,6 +1,6 @@
 import React from 'react';
 
-function AccountRqstCard() {
+function AccountRqstCard({user}) {
   return (
     <div className="p-3 bg-white rounded-lg shadow-md flex items-center gap-4 w-[48%]">
       {/* User Icon */}
@@ -14,8 +14,8 @@ function AccountRqstCard() {
 
       {/* User Info */}
       <div>
-        <p className="text-base font-semibold text-gray-800">Name</p>
-        <p className="text-sm text-gray-600">email@example.com</p>
+        <p className="text-base font-semibold text-gray-800">{user.fullName}</p>
+        <p className="text-sm text-gray-600">{user.email}</p>
       </div>
     </div>
   );

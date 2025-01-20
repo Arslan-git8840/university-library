@@ -3,7 +3,7 @@ const BookCoverSvg = ({ coverColor, className }) => {
         <svg
             preserveAspectRatio="none"
             fill="none"
-            width="118%"
+            width="100%"
             height="100%"
             viewBox="0 0 143 199"
             xmlns="http://www.w3.org/2000/svg"

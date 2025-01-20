@@ -14,27 +14,53 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import FileUpload from "../FileUpload";
+import { toast } from "@/hooks/use-toast";
+import { addBook } from "@/lib/drizzleActions";
+
 
 const AddBookForm = () => {
   const form = useForm({
     defaultValues: {
-      id: "",
       title: "",
       author: "",
       genre: "",
       rating: "",
-      coverUrl: "",
       coverColor: "",
       description: "",
       totalCopies: "",
       availableCopies: "",
-      videoUrl: "",
+      summary: "",
     },
   });
+  const [filePath, setFilePath] = React.useState(''); // State for file path
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     console.log("Form Data:", data);
-  };
+    const response = await addBook({ ...data, coverUrl: filePath, createdBy: "Arslan" });
+    form.reset();
+    if (response.success) {
+      const date = new Date();
+      const createdAt = date.toLocaleDateString('en-US', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+      });
+      toast({
+        title: "Book Added",
+        description: `Book has been added on ${createdAt}`,
+        variant: "default",
+        success: "true",
+      })
+    } else {
+      toast({
+        title: "Book Not Added",
+        description: "Book has not been added",
+        variant: "destructive",
+        success: "false",
+      })
+    }
+  }
 
   return (
     <Form {...form} className='rounded-lg'>
@@ -96,19 +122,6 @@ const AddBookForm = () => {
           )}
         />
 
-        {/* Cover URL */}
-        <FormField
-          name="coverUrl"
-          control={form.control}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Cover Image URL</FormLabel>
-              <FormControl>
-                <Input placeholder="Enter Cover Image URL" {...field} />
-              </FormControl>
-            </FormItem>
-          )}
-        />
 
         {/* Cover Color */}
         <FormField
@@ -118,7 +131,7 @@ const AddBookForm = () => {
             <FormItem>
               <FormLabel>Cover Color</FormLabel>
               <FormControl>
-                <Input type="color" {...field} />
+                <Input {...field} />
               </FormControl>
             </FormItem>
           )}
@@ -165,23 +178,27 @@ const AddBookForm = () => {
             </FormItem>
           )}
         />
-
-        {/* Video URL */}
+        {/* Summary */}
         <FormField
-          name="videoUrl"
+          name="summary"
           control={form.control}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Video URL</FormLabel>
+              <FormLabel>Summary</FormLabel>
               <FormControl>
-                <Input placeholder="Enter Video URL" {...field} />
+                <Textarea placeholder="Enter Book Summary" {...field} />
               </FormControl>
             </FormItem>
           )}
         />
 
-        <Button type="submit" className="w-full text-white bg-primary-admin">
-          Submit
+        <div className="text-white">
+          <FileUpload accept="image/*" folder="books" placeholder="Upload book cover" type="image" backGroundColor={"bg-primary-admin"} onFileUpload={(path) => setFilePath(path)} />
+        </div>
+
+
+        <Button type="submit" className="font-bebasNeue text-lg w-full text-white bg-primary-admin">
+          Add Book
         </Button>
       </form>
     </Form>

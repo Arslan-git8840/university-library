@@ -47,7 +47,7 @@ export default function SignupForm() {
         const formattedValues = {
             ...values,
             universityId: parseInt(values.universityId, 10), // Convert to integer
-            libraryCardUrl: "/books/resume-card-2_yzFzge8FN.png", // Include the file path
+            libraryCardUrl: filePath, // Include the file path
         };
 
         const response = await saveUser(formattedValues);
@@ -139,7 +139,7 @@ export default function SignupForm() {
                         )}
                     />
                     <div>
-                        <FileUpload accept="image/*" folder="books" placeholder="Upload your ID" type="image" onFileUpload={(path) => setFilePath(path)} />
+                        <FileUpload accept="image/*" folder="books" placeholder="Upload your ID" type="image" backGroundColor={'bg-primary-gold'} onFileUpload={(path) => setFilePath(path)} />
                     </div>
 
                     {/* Submit Button */}

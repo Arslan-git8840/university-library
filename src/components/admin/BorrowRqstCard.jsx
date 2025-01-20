@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import BookCover from '../BookCard';
+import BookCover from '@/components/BookCover2';
 
 function BorrowRqstCard() {
   return (
@@ -9,7 +9,7 @@ function BorrowRqstCard() {
         {/* Book Cover Section */}
         <div className="w-16 flex-shrink-0">
           <BookCover
-            coverUrl="/books/covers/React_in_Action_lEnUcul5_.jpg?updatedAt=1737001284754"
+            coverImage="/books/covers/React_in_Action_lEnUcul5_.jpg?updatedAt=1737001284754"
             coverColor="#302428"
           />
         </div>

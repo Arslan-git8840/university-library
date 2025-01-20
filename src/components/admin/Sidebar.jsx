@@ -12,12 +12,7 @@ import {
 } from "@/components/ui/sidebar"
 import Link from "next/link"
 import Image from "next/image"
-import { Urbanist } from 'next/font/google'
 
-const urbanist = Urbanist({
-    subsets: ['latin'],
-    weight: ['500', '600']
-})
 const items = [
     {
         title: "Home",
@@ -53,7 +48,7 @@ const items = [
 
 export function AppSidebar() {
     return (
-        <Sidebar className={`p-8 bg-white`}>
+        <Sidebar className={`p-8 bg-white text-lg`}>
             <SidebarContent>
                 <SidebarGroup>
                     <div className="mb-4">
@@ -66,7 +61,7 @@ export function AppSidebar() {
                                     width={45}
                                 />
                             </div>
-                            <h1 className={`font-bold text-xl text-primary-admin/80 ${urbanist.className} `}>BOOKWISE</h1>
+                            <h1 className={`font-bold text-xl text-primary-admin/80 `}>BOOKWISE</h1>
                         </div>
                     </div>
 

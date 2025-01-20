@@ -25,7 +25,13 @@ const authenticator = async () => {
 };
 
 
-function FileUpload({ accept, folder, placeholder, type, onFileUpload }) {
+function FileUpload({ accept, folder, placeholder, type, onFileUpload, backGroundColor }) {
+
+    
+    console.log("Public Key:", publicKey);
+    console.log("URL Endpoint:", urlEndpoint);
+    const [file, setFile] = useState(null);
+    const ikUploadRefTest = useRef(null);
 
     const onError = (err) => {
         console.log("Error", err);
@@ -58,10 +64,6 @@ function FileUpload({ accept, folder, placeholder, type, onFileUpload }) {
     };
 
 
-    console.log("Public Key:", publicKey);
-    console.log("URL Endpoint:", urlEndpoint);
-    const [file, setFile] = useState(null);
-    const ikUploadRefTest = useRef(null);
 
     useEffect(() => {
         console.log(file)
@@ -85,7 +87,7 @@ function FileUpload({ accept, folder, placeholder, type, onFileUpload }) {
                     style={{ display: 'none' }} // hide the default input and use the custom upload button
                     ref={ikUploadRefTest}
                 />
-                {ikUploadRefTest && <Button className='bg-primary-gold text-center w-full text-lg font-bebasNeue mb-4' onClick={handleButtonClick}>
+                {ikUploadRefTest && <Button className={`${backGroundColor} text-center w-full text-lg font-bebasNeue mb-4`} onClick={handleButtonClick}>
                     <Image
                         src="/icons/upload.svg"
                         alt="upload-icon"

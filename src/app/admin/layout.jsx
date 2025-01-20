@@ -3,11 +3,16 @@ import { AppSidebar } from '@/components/admin/Sidebar'
 import { Input } from '@/components/ui/input'
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
 import { SearchIcon } from 'lucide-react'
+import { Urbanist } from 'next/font/google'
 import React from 'react'
+const urbanist = Urbanist({
+    subsets: ['latin'],
+    weight: ['500', '600']
+})
 
-const layout = ({ children }) => {
+const layout = async ({ children }) => {
     return (
-        <div className='min-h-screen bg-sidebar flex'>
+        <div className={`min-h-screen bg-sidebar flex ${urbanist.className}`}>
             <SidebarProvider>
                 <AppSidebar />
                 <main className='w-full overflow-hidden'>

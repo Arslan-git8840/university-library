@@ -25,6 +25,7 @@ export const users = pgTable("users", {
   lastActivityDate: date("last_activity_date").defaultNow(),
   role: USER_ROLE("role").default("USER"),
   status: STATUS_ENUM("status").default("PENDING"),
+  bookBorrowed: integer("book_borrowed").default(0),
   createdAt: timestamp("created_at", {
     withTimezone: true,
   }).defaultNow(),
@@ -42,6 +43,7 @@ export const books = pgTable("books", {
   totalCopies: integer('total_copies').notNull(),
   availableCopies: integer('available_copies').notNull(),
   summary: text('summary').notNull(),
+  createdBy: text('created_by'),
   createdAt: timestamp("created_at", {
     withTimezone: true,
   }).defaultNow(),

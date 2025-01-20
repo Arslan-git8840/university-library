@@ -1,16 +1,25 @@
 'use client';
 import React from 'react';
-import BookCover from '../BookCard';
+import BookCover from '@/components/BookCover2';
 
-function AddBookCard() {
+function AddBookCard({ book }) {
+  const createdAt = new Date(book.createdAt);
+
+  // Format it as a readable date string
+  const date = createdAt.toLocaleDateString('en-US', {
+    weekday: 'long', // Day of the week (e.g., Monday)
+    year: 'numeric',
+    month: 'long', // Full month name (e.g., January)
+    day: 'numeric'
+  });
   return (
     <div className="p-3 bg-white shadow-md rounded-md">
       <div className="flex gap-6">
         {/* Book Cover Section */}
         <div className="w-16 flex-shrink-0">
           <BookCover
-            coverUrl="/books/covers/React_in_Action_lEnUcul5_.jpg?updatedAt=1737001284754"
-            coverColor="#302428"
+            coverImage={book.coverUrl}
+            coverColor={book.coverColor}
           />
         </div>
 
@@ -18,9 +27,9 @@ function AddBookCard() {
         <div className="flex flex-col justify-between">
           {/* Title and Author */}
           <div>
-            <p className="text-base font-semibold text-gray-800">React in Action</p>
+            <p className="text-base font-semibold text-gray-800">{book.title}</p>
             <p className="text-sm text-gray-600">
-              <span className="font-medium">Author Name</span> · <span>Category</span>
+              <span className="font-medium">{book.author}</span> · <span>{book.genre}</span>
             </p>
           </div>
 
@@ -34,9 +43,9 @@ function AddBookCard() {
               className="rounded-full border border-gray-300"
             />
             <p className="text-sm text-gray-600">
-              Added by <span className="font-medium text-gray-800">Username</span>
+              Added by <span className="font-medium text-gray-800">{book.author}</span>
             </p>
-            <p className="text-sm text-gray-500">on <span className="font-medium">Date</span></p>
+            <p className="text-sm text-gray-500">on <span className="font-medium">{date}</span></p>
           </div>
         </div>
       </div>

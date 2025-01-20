@@ -18,7 +18,7 @@ const Header = () => {
 
       <ul className="flex flex-row items-center gap-10">
         <li className="font-bebasNeue text-lg text-slate-200 tracking-wider mb-10">
-          <Link href='/books'>Library</Link>
+          <Link href='/library?pageSize=8&page=1'>Library</Link>
         </li>
         <li>
           <div
@@ -26,7 +26,7 @@ const Header = () => {
           >
             {session?.user ? <div className="flex gap-4">
               <Button className='bg-primary-gold'>
-                Profile
+                <Link href='/profile'>Profile</Link>
               </Button> <Button className='bg-primary-gold' onClick={handleLogOut}>
                 LogOut
               </Button></div> : <Button className='bg-primary-gold' variant='link'>
