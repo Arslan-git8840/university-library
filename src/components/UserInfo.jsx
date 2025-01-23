@@ -10,7 +10,7 @@ export default function UserInfo({url,fullName,universityId}) {
       <div className="flex flex-col justify-center space-y-8">
         {/* Avatar and User Info */}
         <div className="flex items-center space-x-4">
-          <UserAvatar className="w-24 h-24 rounded-full border-2 border-white" />
+          <UserAvatar className="w-28 h-28 rounded-full border-2 border-white"  />
           <div className="text-white">
             <p className="text-xl font-semibold">{fullName}</p>
             <p className="text-gray-400 text-sm">University ID: <span className="font-semibold">{universityId}</span></p>

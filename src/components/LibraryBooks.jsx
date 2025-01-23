@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { getSpecificBooks } from '@/lib/drizzleActions';
 import BookCover from '@/components/BookCover2';
+import Link from 'next/link';
 
 function LibraryBooks({ offset, limit }) {
     const [books, setBooks] = useState([]);
@@ -30,14 +31,16 @@ function LibraryBooks({ offset, limit }) {
     return (
         <div>
             <h1>Library Books</h1>
-            <div className='flex flex-wrap justify-evenly gap-6 pb-8'>
+            <div className='flex flex-wrap justify-evenly sm:gap-6 gap-0 pb-8'>
                 {books.map((book) => (
-                    <div key={book.title} className='lg:max-w-64 sm:w-52 w-48 whitespace-nowrap p-2 mt-2'>
-                        <BookCover coverImage={book.coverUrl} coverColor={book.coverColor} />
-                        <div className='p-2 overflow-hidden'>
-                            <p className='text-slate-200 text-sm'><span className='text-primary-gold font-semibold'>BookName: </span>{book.title}</p>
-                            <p className='text-slate-200 text-sm'><span className='text-primary-gold font-semibold'>Author: </span>{book.author}</p>
-                            <p className='text-slate-200 text-sm'><span className='text-primary-gold font-semibold'>Category: </span>{book.genre}</p>  </div>
+                    <div key={book.title} className='lg:max-w-64 sm:w-52 w-32 whitespace-nowrap p-2 mt-2'>
+                        <Link href={`/book/${book.id}`}>
+                            <BookCover coverImage={book.coverUrl} coverColor={book.coverColor} />
+                            <div className='p-2 overflow-hidden'>
+                                <p className='text-slate-200 sm:text-sm text-xs'><span className='text-primary-gold font-semibold'>BookName: </span>{book.title}</p>
+                                <p className='text-slate-200 sm:text-sm text-xs'><span className='text-primary-gold font-semibold'>Author: </span>{book.author}</p>
+                                <p className='text-slate-200 sm:text-sm text-xs'><span className='text-primary-gold font-semibold'>Category: </span>{book.genre}</p>  </div>
+                        </Link>
                     </div>
                 ))}
             </div>

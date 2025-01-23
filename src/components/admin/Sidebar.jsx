@@ -1,5 +1,4 @@
 import { User, Settings, BookImage, House, UserCog, ShoppingBasket } from "lucide-react"
-
 import {
     Sidebar,
     SidebarContent,
@@ -12,6 +11,12 @@ import {
 } from "@/components/ui/sidebar"
 import Link from "next/link"
 import Image from "next/image"
+import { Playwrite_IN } from 'next/font/google'
+
+const playwriteFont = Playwrite_IN({
+    weight: ['400'],
+})
+ 
 
 const items = [
     {
@@ -52,16 +57,16 @@ export function AppSidebar() {
             <SidebarContent>
                 <SidebarGroup>
                     <div className="mb-4">
-                        <div className="logo flex items-center gap-3">
-                            <div className="p-[14px] h-[60px] w-[60px] flex rounded-full bg-primary-admin">
+                        <div className="logo flex items-center">
+                            <div className="p-[14px] h-[60px] w-[60px] flex rounded-full">
                                 <Image
-                                    src="/icons/logo.svg"
+                                    src="/icons/open-book.png"
                                     alt="logo"
                                     height={45}
                                     width={45}
                                 />
                             </div>
-                            <h1 className={`font-bold text-xl text-primary-admin/80 `}>BOOKWISE</h1>
+                            <h1 className={`font-[800] text-sm text-primary-admin/80 ${playwriteFont.className} mt-[5px]`}>BOOKWISE</h1>
                         </div>
                     </div>
 

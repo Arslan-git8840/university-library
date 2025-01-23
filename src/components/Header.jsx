@@ -1,22 +1,21 @@
-'use client';
-import { signOut, useSession } from "next-auth/react";
+
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import { UserAvatar } from "./UserAvatar";
+import { auth } from "@/auth";
 
 
-const Header = () => {
-  const { data: session, status } = useSession();
-  const handleLogOut = async () => {
-    await signOut();
-  }
+const Header = async () => {
+  const session = await auth();
+
   return (
-    <header className="py-6 px-10 flex justify-between gap-5">
+    <header className="pt-6 pb-2 sm:px-10 px-4 flex justify-between gap-5">
       <Link href="/">
         <Image src="/icons/logo.svg" alt="logo" width={40} height={40} />
       </Link>
 
-      <ul className="flex flex-row items-center gap-10">
+      <ul className="flex flex-row items-center gap-6">
         <li className="font-bebasNeue text-lg text-slate-200 tracking-wider mb-10">
           <Link href='/library?pageSize=8&page=1'>Library</Link>
         </li>
@@ -25,11 +24,10 @@ const Header = () => {
             className="mb-10"
           >
             {session?.user ? <div className="flex gap-4">
-              <Button className='bg-primary-gold'>
-                <Link href='/profile'>Profile</Link>
-              </Button> <Button className='bg-primary-gold' onClick={handleLogOut}>
-                LogOut
-              </Button></div> : <Button className='bg-primary-gold' variant='link'>
+              <Link href='/profile'>
+                <UserAvatar className={'h-12 w-12'} />
+              </Link>
+            </div> : <Button className='bg-primary-gold' variant='link'>
               <Link href='/api/auth/signin'>SignIn</Link>
             </Button>}
           </div>

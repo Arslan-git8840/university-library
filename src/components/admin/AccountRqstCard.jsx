@@ -2,7 +2,7 @@ import React from 'react';
 
 function AccountRqstCard({user}) {
   return (
-    <div className="p-3 bg-white rounded-lg shadow-md flex items-center gap-4 w-[48%]">
+    <div className="p-3 bg-white rounded-lg shadow-md flex items-center gap-4 max-w-fit">
       {/* User Icon */}
       <div className="flex-shrink-0">
         <img

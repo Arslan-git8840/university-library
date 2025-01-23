@@ -11,6 +11,7 @@ import { users } from '@/db/schema';
 import { count } from 'drizzle-orm';
 import { getBorrowedBooks } from '@/lib/getBorrowedBooks';
 import { AlertDialogDemo } from './editform';
+import { getBorrowedBook } from '@/lib/drizzleActions';
 
 async function Dashboard() {
   const booklist = await db.select().from(books).limit(7);
@@ -20,27 +21,14 @@ async function Dashboard() {
   const totalBooks = book[0].count
   const totalUsers = user[0].count
   const totalBorrowedBooks = await getBorrowedBooks();
+  const borrowedBooks = await getBorrowedBook();
   console.log('total borrowed books :', totalBorrowedBooks);
   return (
-    <div className={` flex flex-col bg-slate-100/80 px-8 py-4 gap-4`}>
-      {/* Header Section */}
-      {/* <div className="p-4 bg-white flex justify-between items-center rounded-lg"> */}
-      {/* <h1 className="text-lg">
-          Welcome to bookwise, <span className="text-xl font-semibold text-blue-500">Adrian</span>
-        </h1> */}
-      {/* Search Input */}
-      {/* <div className="relative">
-          <SearchIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" size={20} />
-          <Input
-            className="pl-10 pr-4 py-2 w-96 border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-300 focus:border-blue-500"
-            placeholder="Search books..."
-          />
-        </div> */}
-      {/* </div> */}
+    <div className={` flex flex-col bg-slate-100/80 lg:px-8 px-[6px] lg:py-4 py-1 lg:gap-4 gap-0`}>
 
-      <div className="flex gap-8 justify-between items-center">
+      <div className="gap-8 p-2 justify-between items-center lg:flex hidden">
         <div className={`p-4 bg-white w-1/3 h-24 flex flex-col justify-between rounded-lg`}>
-        
+
           <p className='text-xl'>Borrowed Books</p>
           <p className='text-2xl font-bold'>{totalBorrowedBooks}</p>
         </div>
@@ -55,19 +43,17 @@ async function Dashboard() {
       </div>
 
 
-      <div className='flex gap-4 rounded-lg '>
-        <div className='flex flex-col gap-2 p-3'>
+      <div className='flex lg:flex-row flex-col gap-4 rounded-lg '>
+        <div className='flex flex-col gap-2 lg:p-3 p-0'>
           <div>
             <div className='flex items-center justify-between mb-2'>
               <h1 className='font-semibold'>Borrow Requests</h1>
               <Button variant='link' className={'text-primary-admin'}><Link href={'/admin/borrowrequests'}>View All</Link></Button>
             </div>
-            <div className='bookrqstcard w-[550px] overflow-scroll flex flex-col gap-2'>
-              <BorrowRqstCard />
-              <BorrowRqstCard />
-              <BorrowRqstCard />
-              <BorrowRqstCard />
-              <BorrowRqstCard />
+            <div className='bookrqstcard lg:w-[550px] w-full overflow-scroll flex flex-col gap-2'>
+              {borrowedBooks.data.map((borrowRecord) => (
+                <BorrowRqstCard user ={borrowRecord.users} book={borrowRecord.books} record={borrowRecord.borrow_records}/>
+              ))}
             </div>
           </div>
           <div className='mt-2'>

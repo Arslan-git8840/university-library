@@ -9,10 +9,10 @@ import React from 'react'
 async function AllBooks() {
   const bookList = await db.select().from(books);
   return (
-    <div className='p-8'>
+    <div className='lg:p-8 px-3 py-6'>
         <h1 className='text-2xl font-semibold text-primary-admin'>All Books</h1>
         <Button className={'bg-primary-admin text-white mt-4'}><PlusIcon /> <Link href='/admin/addBook'>Add New Book</Link></Button>
-        <div className='py-4 px-8'>
+        <div className='lg:py-4 lg:px-8 px-2'>
         <BookListTable bookList={bookList}/>
         </div>
     </div>

@@ -87,7 +87,7 @@ function UserAccountTable({ userList }) {
                         month: 'long'
                     })
                     return (
-                        <TableRow>
+                        <TableRow key={user.id}>
                             <TableCell className="font-medium flex items-center space-x-4 whitespace-nowrap w-[200px]">
                                 <img
                                     src="/icons/user.svg"

@@ -43,9 +43,9 @@ function AddBookCard({ book }) {
               className="rounded-full border border-gray-300"
             />
             <p className="text-sm text-gray-600">
-              Added by <span className="font-medium text-gray-800">{book.author}</span>
+              Added by <span className="font-semibold text-black">{book.author}</span>
             </p>
-            <p className="text-sm text-gray-500">on <span className="font-medium">{date}</span></p>
+            <p className="text-sm text-gray-500">on <span className="font-semibold text-black">{date}</span></p>
           </div>
         </div>
       </div>

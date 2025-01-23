@@ -70,10 +70,10 @@ export default function LoginForm() {
  
    
     return (
-        <div className='max-w-xl mx-auto w-full p-8 shadow shadow-primary-gold rounded-lg bg-gray-00'>
-            <div className="flex items-center justify-center gap-2 mb-4">
-                <Image src='/icons/book.svg' height={40} width={40} alt='book'></Image>
-                <p className='text-3xl font-bebasNeue text-primary-gold text-center'>
+        <div className='max-w-xl mx-auto w-full p-8 sm:shadow sm:shadow-primary-gold rounded-lg bg-gray-00'>
+            <div className="flex items-center justify-center gap-4 mb-4">
+                <Image src='/icons/open-book.png' height={40} width={40} alt='book' className="invert"></Image>
+                <p className='text-3xl font-bebasNeue text-primary-gold text-center mt-[10px]'>
                     Welcome to UNIVERSITY LIBRARY</p>
             </div>
 

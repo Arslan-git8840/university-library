@@ -1,14 +1,15 @@
 import React from 'react';
 import { FaStar } from 'react-icons/fa'; // Importing star icon from react-icons
-import { Button } from './ui/button';
-import Image from 'next/image';
-import Link from 'next/link';
 import BookDisplay from './BookDisplay';
 import { db } from '@/db/drizzle';
 import { books } from '@/db/schema';
+import { eq } from 'drizzle-orm';
+import BorrowBook from './BorrowBook';
+import { auth } from '@/auth';
 
-async function BookOverview() {
-  const bookArray = await db.select().from(books).limit(1);
+async function BookDetails({id}) {
+  const session = await auth();
+  const bookArray = await db.select().from(books).where(eq(books.id, id));
   console.log(bookArray);
   const book = bookArray[0];
 
@@ -35,10 +36,7 @@ async function BookOverview() {
           <p className='flex items-center gap-1'><span className='font-semibold text-primary-gold'>Available books</span>   <span>{book.availableCopies}</span></p>
         </div>
         <p className='mt-2'>{book.description}</p>
-        <Button className='mt-4 bg-primary-gold text-black font-bebasNeue text-lg flex items-center'>
-          <Image src='/icons/book.svg' alt='book icon' width={20} height={20}></Image>
-          <Link href={`/book/${book.id}`}>Borrow Book</Link>
-        </Button>
+       <BorrowBook userId={session.user.id} bookId={book.id} />
       </div>
       {/* Book image with cover */}
       <div className='lg:m-4 mx-auto lg:mr-[50px] relative sm:w-[300px] w-[200px] order-1 lg:order-2'>
@@ -55,4 +53,4 @@ async function BookOverview() {
   );
 }
 
-export default BookOverview;
+export default BookDetails;
