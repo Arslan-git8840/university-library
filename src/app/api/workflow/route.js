@@ -1,5 +1,6 @@
 import { serve } from "@upstash/workflow/nextjs";
-
+import { sendEmail } from "@/lib/sendEmail";
+import { getUserState } from "@/lib/getUserState";
 export const { POST } = serve(async (context) => {
   const { email } = context.requestPayload;
 
@@ -11,7 +12,7 @@ export const { POST } = serve(async (context) => {
 
   while (true) {
     const state = await context.run("check-user-state", async () => {
-      return await getUserState();
+      return await getUserState(email);
     });
 
     if (state === "non-active") {
@@ -28,12 +29,5 @@ export const { POST } = serve(async (context) => {
   }
 });
 
-async function sendEmail(message, email) {
-  // Implement email sending logic here
-  console.log(`Sending ${message} email to ${email}`);
-}
 
-const getUserState = async () => {
-  // Implement user state logic here
-  return "non-active";
-};
+
