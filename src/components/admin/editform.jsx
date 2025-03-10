@@ -94,7 +94,7 @@ export default function EditForm({id}) {
         </AlertDialogHeader>
 
         {/* Form inside AlertDialog */}
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2 grid grid-cols-1 md:grid-cols-2 gap-x-4">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2 grid md:grid-cols-2 gap-x-4">
           {/* Title */}
           <div>
             <label htmlFor="title">Title</label>
@@ -144,7 +144,7 @@ export default function EditForm({id}) {
           </div>
 
           {/* Summary */}
-          <div className="mb-2">
+          <div className="mb-2 col-span-2">
             <label htmlFor="summary">Summary</label>
             <Textarea id="summary" name="summary" placeholder="Enter Book Summary" {...form.register('summary')} />
           </div>

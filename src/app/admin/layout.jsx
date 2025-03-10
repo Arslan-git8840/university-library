@@ -15,7 +15,7 @@ const layout = async ({ children }) => {
         <div className={`min-h-screen bg-sidebar flex ${urbanist.className}`}>
             <SidebarProvider>
                 <AppSidebar />
-                <main className=' overflow-hidden'>
+                <main className=' overflow-hidden w-full'>
                     <SidebarTrigger />
                     <div className='lg:px-8 px-2 py-2 bg-gray-200'>
                         <div className="p-4  bg-white flex lg:flex-row flex-col gap-2 justify-between items-center rounded-lg">

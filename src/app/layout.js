@@ -31,7 +31,6 @@ export default function RootLayout({ children }) {
         <body
           className={`${ibmPlexSans.className} ${bebasNeue.variable} antialiased bg-pattern bg-cover bg-top bg-dark-100`}
         >
-          {/* <Header/> */}
           {children}
           <Toaster />
         </body>

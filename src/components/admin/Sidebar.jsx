@@ -16,7 +16,7 @@ import { Playwrite_IN } from 'next/font/google'
 const playwriteFont = Playwrite_IN({
     weight: ['400'],
 })
- 
+
 
 const items = [
     {
@@ -58,14 +58,16 @@ export function AppSidebar() {
                 <SidebarGroup>
                     <div className="mb-4">
                         <div className="logo flex items-center">
-                            <div className="p-[14px] h-[60px] w-[60px] flex rounded-full">
-                                <Image
-                                    src="/icons/open-book.png"
-                                    alt="logo"
-                                    height={45}
-                                    width={45}
-                                />
-                            </div>
+                            <Link href='/admin'>
+                                <div className="p-[14px] h-[60px] w-[60px] flex">
+                                    <Image
+                                        src="/icons/open-book.png"
+                                        alt="logo"
+                                        height={45}
+                                        width={45}
+                                    />
+                                </div>
+                            </Link>
                             <h1 className={`font-[800] text-sm text-primary-admin/80 ${playwriteFont.className} mt-[5px]`}>BOOKWISE</h1>
                         </div>
                     </div>
