@@ -15,9 +15,32 @@ export async function GET(request) {
 
   try {
     const authParams = imagekit.getAuthenticationParameters();
-    return NextResponse.json(authParams);
+    // return NextResponse.json(authParams);
+    // added by me later 
+    return NextResponse.json(authParams, {
+      headers: {
+        "Access-Control-Allow-Origin": "https://university-library-tan.vercel.app", // Replace with your frontend's origin
+        "Access-Control-Allow-Methods": "GET, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+      },
+    });
   } catch (error) {
     console.error("Error fetching authentication parameters:", error);
     return NextResponse.json({ error: "Failed to retrieve authentication parameters." }, { status: 500 });
   }
+}
+
+
+// later added by me
+
+// OPTIONS handler for preflight requests
+export async function OPTIONS(request) {
+  return new NextResponse(null, {
+    status: 204,
+    headers: {
+      "Access-Control-Allow-Origin": "https://university-library-tan.vercel.app", // Replace with your frontend's origin
+      "Access-Control-Allow-Methods": "GET, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type, Authorization",
+    },
+  });
 }
