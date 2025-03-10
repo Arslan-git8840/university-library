@@ -27,7 +27,7 @@ export async function saveUser(data) {
 
     // Queue the email task
     await qstash.publishJSON({
-      url: `${process.env.NEXT_PUBLIC_URL}/api/send-email`,
+      url: `https://university-library.vercel.app/api/send-email`,
       body: {
         email: data.email,
       },
