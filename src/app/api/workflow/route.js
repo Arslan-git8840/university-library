@@ -1,6 +1,7 @@
 import { serve } from "@upstash/workflow/nextjs";
-import { sendEmail } from "@/lib/sendEmail";
-import { getUserState } from "@/lib/getUserState";
+import { users } from "@/db/schema";
+import { db } from "@/db/drizzle";
+import { eq } from "drizzle-orm";
 export const { POST } = serve(async (context) => {
   const { email } = context.requestPayload;
 
@@ -28,6 +29,42 @@ export const { POST } = serve(async (context) => {
     await context.sleep("wait-for-1-month", 60 * 60 * 24 * 30);
   }
 });
+
+
+
+async function sendEmail(subject, email) {
+  const transporter = nodemailer.createTransport({
+    host: "sandbox.smtp.mailtrap.io", // Change this for production
+    port: 2525,
+    auth: {
+      user: process.env.EMAIL_USER, // Set in .env file
+      pass: process.env.EMAIL_PASS, // Set in .env file
+    },
+  });
+
+  await transporter.sendMail({
+    from: '"Your App" <noreply@yourapp.com>',
+    to: email,
+    subject: subject,
+    text: `Hello, ${subject}`,
+    html: `<p>Hello, ${subject}</p>`,
+  });
+
+  console.log(`📧 Email sent: ${subject} to ${email}`);
+}
+
+
+async function getUserState(email) {
+  const user = await db.select().from(users).where(eq(users.email, email));
+
+  if (!user || user.length === 0) return "non-active";
+
+  const lastLogin = user[0].lastActivityDate;
+  const threeDaysAgo = new Date();
+  threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
+
+  return lastLogin < threeDaysAgo ? "non-active" : "active";
+}
 
 
 
