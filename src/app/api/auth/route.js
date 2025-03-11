@@ -20,7 +20,7 @@ export async function GET(request) {
     return NextResponse.json(authParams, {
       headers: {
         "Access-Control-Allow-Origin": "https://university-library-tan.vercel.app", // Replace with your frontend's origin
-        "Access-Control-Allow-Methods": "GET, OPTIONS",
+        "Access-Control-Allow-Methods": "POST, OPTIONS",
         "Access-Control-Allow-Headers": "Content-Type, Authorization",
       },
     });
@@ -39,7 +39,7 @@ export async function OPTIONS(request) {
     status: 204,
     headers: {
       "Access-Control-Allow-Origin": "https://university-library-tan.vercel.app", // Replace with your frontend's origin
-      "Access-Control-Allow-Methods": "GET, OPTIONS",
+      "Access-Control-Allow-Methods": "POST, OPTIONS",
       "Access-Control-Allow-Headers": "Content-Type, Authorization",
     },
   });
