@@ -2,7 +2,7 @@
 import { db } from "@/db/drizzle";
 import { books, borrowRecords, users } from "@/db/schema";
 import { eq } from "drizzle-orm";
-import { Client } from "@upstash/qstash";
+// import { Client } from "@upstash/qstash";
 
 export async function saveUser(data) {
   try {
@@ -21,19 +21,19 @@ export async function saveUser(data) {
 
     const newUser = await db.insert(users).values(data).returning();
 
-    const qstash = new Client({
-      token: process.env.QSTASH_TOKEN,
-    });
+    // const qstash = new Client({
+    //   token: process.env.QSTASH_TOKEN,
+    // });
 
-    // Queue the email task
-    await qstash.publishJSON({
-      url: `https://university-library.vercel.app/api/send-email`,
-      body: {
-        email: data.email,
-      },
-      // Optional: delay the email by 1 second to ensure login completes
-      delay: 1,
-    });
+    // // Queue the email task
+    // await qstash.publishJSON({
+    //   url: `https://university-library.vercel.app/api/send-email`,
+    //   body: {
+    //     email: data.email,
+    //   },
+    //   // Optional: delay the email by 1 second to ensure login completes
+    //   delay: 1,
+    // });
 
     return {
       success: true,
