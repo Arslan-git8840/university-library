@@ -2,6 +2,9 @@
 import { db } from "@/db/drizzle";
 import { books, borrowRecords, users } from "@/db/schema";
 import { eq } from "drizzle-orm";
+import { Client } from "@upstash/qstash";
+
+const client = new Client({ token: process.env.QSTASH_TOKEN });
 
 export async function saveUser(data) {
   try {
@@ -223,6 +226,12 @@ export const getBorrowedBook = async () => {
       .innerJoin(books, eq(borrowRecords.bookId, books.id)); // Join books on bookId;
 
     console.log("Borrowed Books Response:", response);
+
+    // Schedule a task to trigger an event after login
+    await client.schedules.create({
+      destination: `https://university-library-tan.vercel.app/api/send-email`,
+      cron: "*/5 * * * *", // Runs every 5 minutes (for testing purposes)
+    });
 
     if (!response || response.length === 0) {
       return { success: false, message: "No borrowed books found." };
