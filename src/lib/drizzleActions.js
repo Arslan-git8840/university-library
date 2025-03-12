@@ -227,14 +227,14 @@ export const getBorrowedBook = async () => {
 
     console.log("Borrowed Books Response:", response);
 
-    // Schedule a task to trigger an event
-    await client.schedules.create({
-      destination: `https://university-library-tan.vercel.app/api/send-email`,
-      cron: "*/5 * * * *", // Runs every 5 minutes (for testing purposes),
-      body: {
-        email: response[0].users?.email,
-      }
-    });
+    // // Schedule a task to trigger an event
+    // await client.schedules.create({
+    //   destination: `https://university-library-tan.vercel.app/api/send-email`,
+    //   cron: "*/5 * * * *", // Runs every 5 minutes (for testing purposes),
+    //   body: {
+    //     email: response[0].users?.email,
+    //   }
+    // });
 
     if (!response || response.length === 0) {
       return { success: false, message: "No borrowed books found." };

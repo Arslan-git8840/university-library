@@ -64,7 +64,7 @@ async function Profile() {
         </form>
 
         {user.bookBorrowed ? (
-          borrowedBooks.data.map((borrowedBook) => {
+          borrowedBooks.data?.map((borrowedBook) => {
             // Format the BorrowDate and DueDate here
             const BorrowDate = new Date(borrowedBook.borrow_records.borrowDate).toLocaleDateString('en-US', {
               weekday: 'long',
