@@ -27,7 +27,9 @@ function UserTable({ userList }) {
                 variant: 'default',
                 success: "true",
             })
-            router.refresh();
+            // router.refresh();
+            router.replace('/admin/users');
+
         } else {
             toast({
                 title: 'User Not Deleted',

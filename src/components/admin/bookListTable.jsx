@@ -15,8 +15,10 @@ import BookCover from "@/components/BookCover2";
 import { toast } from "@/hooks/use-toast";
 import { bookToDelete } from "@/lib/drizzleActions";
 import EditForm from "./editform";
+import { useRouter } from "next/navigation";
 
 function BookListTable({ bookList }) {
+    const router = useRouter();
     const deleteBook = async (id) => {
         const response = await bookToDelete(id);
         if (response.success) {
@@ -27,6 +29,7 @@ function BookListTable({ bookList }) {
                 day: 'numeric',
                 month: "long"
             })
+            router.replace('/admin/books');
             toast({
                 title: "Book deleted successfully!",
                 description: deleteDate,

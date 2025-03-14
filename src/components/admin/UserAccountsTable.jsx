@@ -51,7 +51,9 @@ function UserAccountTable({ userList }) {
                 variant: 'default',
                 success: "true",
             })
-            router.refresh();
+            // router.refresh();
+            router.replace('/admin/accountrequests');
+
         } else {
             toast({
                 title: 'User Not Deleted',
