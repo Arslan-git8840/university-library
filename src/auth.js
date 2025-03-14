@@ -3,6 +3,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { db } from "./db/drizzle";
 import { users } from "./db/schema";
 import { eq } from "drizzle-orm";
+import { updateLastActivity } from "./lib/updateLastActivityStatusOfUser";
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
     CredentialsProvider({
@@ -34,6 +35,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         if (!isPasswordValid) {
           return null;
         }
+
+        await updateLastActivity(user[0].email);
+
         return {
           id: user[0].id,
           email: user[0].email,

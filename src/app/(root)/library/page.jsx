@@ -8,6 +8,7 @@ import { SearchBook } from '@/lib/searchBooks';
 import { useState, useEffect } from 'react';
 import BookCover from '@/components/BookCover2';
 import Link from 'next/link';
+import axios from 'axios';
 
 export default function Library() {
     const searchParams = useSearchParams();
@@ -48,10 +49,23 @@ export default function Library() {
         setSearchResults(null);
     }, [page, pageSize]);
 
+    const handleClick = async () => {
+        // const email = 'Johnson@lib.com';
+        const email = 'Upstash@gmail.com';
+
+        try {
+          const { data } = await axios.get(`/api/userState`, { params: { email } });
+          console.log("User status:", data.status);
+          console.log(data);
+        } catch (error) {
+          console.error("Error fetching user status:", error);
+        }
+      };
+
     return (
         <div className="p-4">
             {/* Heading */}
-            <div className="mb-8 max-w-lg mx-auto text-center">
+            <div className="mb-8 max-w-lg mx-auto text-center" onClick={handleClick}>
                 <h1 className="text-3xl font-semibold text-primary-gold">
                     <span className='mr-1'>Hey,</span>
                     <span className="text-slate-200 mt-2 text-2xl">

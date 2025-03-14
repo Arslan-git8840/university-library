@@ -18,9 +18,9 @@ import { useRouter } from "next/navigation";
 
 function UserTable({ userList }) {
     const router = useRouter();
-    const deletedUser = async(id)=>{
+    const deletedUser = async (id) => {
         const response = await deleteUser(id);
-        if(response.success){
+        if (response.success) {
             toast({
                 title: 'User Deleted',
                 description: 'User has been deleted.',
@@ -28,7 +28,7 @@ function UserTable({ userList }) {
                 success: "true",
             })
             router.refresh();
-        }else{
+        } else {
             toast({
                 title: 'User Not Deleted',
                 description: 'User has not been deleted.',
