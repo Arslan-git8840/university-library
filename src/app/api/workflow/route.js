@@ -74,8 +74,8 @@ export const { POST } = serve(async (context) => {
     const users = await context.run("check-user-state", async () => {
       console.log("Fetching users...");
       const { data } = await axios.get("https://university-library-tan.vercel.app/api/userState");
-      console.log("Fetched users:", data);
-      return data; // Expecting an array of users with { email, status }
+      console.log("Fetched users:", data.userStates);
+      return data.userStates; // Expecting an array of users with { email, status }
     });
 
     // Separate active and inactive users
