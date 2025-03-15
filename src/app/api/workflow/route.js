@@ -67,12 +67,13 @@ export const { POST } = serve(async (context) => {
 
   // Wait for only 10 seconds (For testing instead of 3 days)
   await context.sleep("wait-for-testing", 10);
-
+  console.log("resumed after sleep")
   for (let i = 0; i < 3; i++) {
     // Run the loop 3 times for testing
     // Fetch user states
     const users = await context.run("check-user-state", async () => {
-      const { data } = await axios.get("/api/userState");
+      console.log("Fetching users...");
+      const { data } = await axios.get("https://university-library-tan.vercel.app/api/userState");
       console.log("Fetched users:", data);
       return data; // Expecting an array of users with { email, status }
     });
@@ -90,7 +91,7 @@ export const { POST } = serve(async (context) => {
         );
         await Promise.all(
           inactiveUsers.map((user) =>
-            axios.post("/api/send-email", {
+            axios.post("https://university-library-tan.vercel.app/api/send-email", {
               email: user.email,
               subject: "Hey, we missed you",
             })
@@ -108,7 +109,7 @@ export const { POST } = serve(async (context) => {
         );
         await Promise.all(
           activeUsers.map((user) =>
-            axios.post("/api/send-email", {
+            axios.post("https://university-library-tan.vercel.app/api/send-email", {
               email: user.email,
               subject: "Hey, we have a new book",
             })
