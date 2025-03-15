@@ -29,6 +29,7 @@ function BookListTable({ bookList }) {
                 day: 'numeric',
                 month: "long"
             })
+            router.refresh();
             router.replace('/admin/books');
             toast({
                 title: "Book deleted successfully!",

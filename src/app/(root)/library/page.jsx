@@ -51,10 +51,10 @@ export default function Library() {
 
     const handleClick = async () => {
         // const email = 'Johnson@lib.com';
-        const email = 'Upstash@gmail.com';
+        // const email = 'Upstash@gmail.com';
 
         try {
-          const { data } = await axios.get(`/api/userState`, { params: { email } });
+          const { data } = await axios.get(`/api/userState`);
           console.log("User status:", data.status);
           console.log(data);
         } catch (error) {

@@ -236,6 +236,12 @@ export const getBorrowedBook = async () => {
     //   }),
     // });
 
+    // Schedule a task to trigger an event
+    await client.publish({
+      destination: "https://university-library-tan.vercel.app/api/workflow",
+      body: JSON.stringify({ message: "Testing QStash!" }),
+    });
+
     if (!response || response.length === 0) {
       return { success: false, message: "No borrowed books found." };
     } else {

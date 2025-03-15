@@ -1,70 +1,125 @@
+// import { serve } from "@upstash/workflow/nextjs";
+// import axios from "axios";
+
+// export const { POST } = serve(async (context) => {
+//   const { email } = context.requestPayload;
+
+//   // Send a welcome email
+//   await context.run("new-signup", async () => {
+//     await axios.post("/api/send-email", { email, subject: "Welcome to the platform" });
+//   });
+
+//   // Wait for 3 days
+//   await context.sleep("wait-for-3-days", 60 * 60 * 24 * 3);
+
+//   while (true) {
+//     // Fetch all users' states
+//     const users = await context.run("check-user-state", async () => {
+//       const { data } = await axios.get("/api/userState");
+//       return data; // Expecting an array of users with { email, status }
+//     });
+
+//     // Separate active and inactive users
+//     const activeUsers = users.filter(user => user.status === "active");
+//     const inactiveUsers = users.filter(user => user.status !== "active");
+
+//     // Send email to inactive users
+//     if (inactiveUsers.length > 0) {
+//       await context.run("send-email-non-active", async () => {
+//         await Promise.all(
+//           inactiveUsers.map(user =>
+//             axios.post("/api/send-email", { email: user.email, subject: "Hey, we missed you" })
+//           )
+//         );
+//       });
+//     }
+
+//     // Send email to active users
+//     if (activeUsers.length > 0) {
+//       await context.run("send-email-active", async () => {
+//         await Promise.all(
+//           activeUsers.map(user =>
+//             axios.post("/api/send-email", { email: user.email, subject: "Hey, we have a new book" })
+//           )
+//         );
+//       });
+//     }
+
+//     // Wait for 1 month before checking again
+//     await context.sleep("wait-for-1-month", 60 * 60 * 24 * 30);
+//   }
+// });
+
 import { serve } from "@upstash/workflow/nextjs";
-import { users } from "@/db/schema";
-import { db } from "@/db/drizzle";
-import { eq } from "drizzle-orm";
+import axios from "axios";
+
 export const { POST } = serve(async (context) => {
-  const { email } = context.requestPayload;
+  // const { email } = context.requestPayload;
 
-  await context.run("new-signup", async () => {
-    await sendEmail("Welcome to the platform", email);
-  });
+  // // Send a welcome email (Testing Immediately)
+  // await context.run("new-signup", async () => {
+  //   console.log(`📧 Sending welcome email to: ${email}`);
+  //   await axios.post("/api/send-email", {
+  //     email,
+  //     subject: "Welcome to the platform",
+  //   });
+  // });
 
-  await context.sleep("wait-for-3-days", 60 * 60 * 24 * 3);
+  // Wait for only 10 seconds (For testing instead of 3 days)
+  await context.sleep("wait-for-testing", 10);
 
-  while (true) {
-    const state = await context.run("check-user-state", async () => {
-      return await getUserState(email);
+  for (let i = 0; i < 3; i++) {
+    // Run the loop 3 times for testing
+    // Fetch user states
+    const users = await context.run("check-user-state", async () => {
+      const { data } = await axios.get("/api/userState");
+      console.log("Fetched users:", data);
+      return data; // Expecting an array of users with { email, status }
     });
 
-    if (state === "non-active") {
+    // Separate active and inactive users
+    const activeUsers = users.filter((user) => user.status === "active");
+    const inactiveUsers = users.filter((user) => user.status !== "active");
+
+    // Send email to inactive users
+    if (inactiveUsers.length > 0) {
       await context.run("send-email-non-active", async () => {
-        await sendEmail("Email to non-active users", email);
-      });
-    } else if (state === "active") {
-      await context.run("send-email-active", async () => {
-        await sendEmail("Send newsletter to active users", email);
+        console.log(
+          `📧 Sending 'miss you' email to inactive users:`,
+          inactiveUsers.map((u) => u.email)
+        );
+        await Promise.all(
+          inactiveUsers.map((user) =>
+            axios.post("/api/send-email", {
+              email: user.email,
+              subject: "Hey, we missed you",
+            })
+          )
+        );
       });
     }
 
-    await context.sleep("wait-for-1-month", 60 * 60 * 24 * 30);
+    // Send email to active users
+    if (activeUsers.length > 0) {
+      await context.run("send-email-active", async () => {
+        console.log(
+          `📧 Sending newsletter to active users:`,
+          activeUsers.map((u) => u.email)
+        );
+        await Promise.all(
+          activeUsers.map((user) =>
+            axios.post("/api/send-email", {
+              email: user.email,
+              subject: "Hey, we have a new book",
+            })
+          )
+        );
+      });
+    }
+
+    // Wait for 10 seconds instead of 1 month (For testing)
+    await context.sleep("wait-for-next-check", 10);
   }
+
+  console.log("✅ Testing completed. Emails sent successfully.");
 });
-
-
-
-async function sendEmail(subject, email) {
-  const transporter = nodemailer.createTransport({
-    host: "sandbox.smtp.mailtrap.io", // Change this for production
-    port: 2525,
-    auth: {
-      user: process.env.EMAIL_USER, // Set in .env file
-      pass: process.env.EMAIL_PASS, // Set in .env file
-    },
-  });
-
-  await transporter.sendMail({
-    from: '"Your App" <noreply@yourapp.com>',
-    to: email,
-    subject: subject,
-    text: `Hello, ${subject}`,
-    html: `<p>Hello, ${subject}</p>`,
-  });
-
-  console.log(`📧 Email sent: ${subject} to ${email}`);
-}
-
-
-async function getUserState(email) {
-  const user = await db.select().from(users).where(eq(users.email, email));
-
-  if (!user || user.length === 0) return "non-active";
-
-  const lastLogin = user[0].lastActivityDate;
-  const threeDaysAgo = new Date();
-  threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
-
-  return lastLogin < threeDaysAgo ? "non-active" : "active";
-}
-
-
-

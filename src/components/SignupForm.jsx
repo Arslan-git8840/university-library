@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-
+import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import {
     Form,
@@ -21,6 +21,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import FileUpload from "./FileUpload";
 import { saveUser } from "@/lib/drizzleActions";
+import { getFormattedDateTime } from "@/lib/currDate";
 
 
 
@@ -57,10 +58,16 @@ export default function SignupForm() {
         } else {
             setSuccess(response.message);
             setError('');
+            const time = getFormattedDateTime();
+            toast({
+                title: 'Signup Successfull',
+                description: time,
+                status: "success"
+            });
         }
         console.log(formattedValues);
     };
-   
+
 
 
     return (
