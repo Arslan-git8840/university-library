@@ -9,7 +9,7 @@ const urbanist = Urbanist({
 
 const Layout =async ({ children }) => {
     const session = await auth();
-    // if(!session) redirect('/api/auth/signin');
+    if(!session) redirect('/api/auth/signin');
     
     return (
         <div className={`min-h-screen bg-cover bg-top bg-dark-100 bg-pattern ${urbanist.className}`}>
