@@ -58,7 +58,7 @@ async function Profile() {
         <form action={async () => {
           'use server'
           await signOut();
-          redirect('/api/auth/signin');
+          redirect('/signup');
         }}>
           <Button type='submit' className='bg-primary-gold absolute top-[85px] right-10 text-lg font-bebasNeue tracking-wider'>Logout</Button>
         </form>
