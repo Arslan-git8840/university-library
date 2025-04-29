@@ -27,8 +27,8 @@ function UserTable({ userList }) {
                 variant: 'default',
                 success: "true",
             })
-            // router.refresh();
-            router.replace('/admin/users');
+            router.refresh();
+            // router.replace('/admin/users');
 
         } else {
             toast({
