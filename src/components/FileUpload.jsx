@@ -27,17 +27,19 @@ const authenticator = async () => {
 
 function FileUpload({ accept, folder, placeholder, type, onFileUpload, backGroundColor }) {
 
-    
+    const [isUploading, setIsUploading] = useState(false);
     console.log("Public Key:", publicKey);
     console.log("URL Endpoint:", urlEndpoint);
     const [file, setFile] = useState(null);
     const ikUploadRefTest = useRef(null);
 
     const onError = (err) => {
+        setIsUploading(false);
         console.log("Error", err);
     };
 
     const onSuccess = (res) => {
+        setIsUploading(false);
         setFile(res);
         onFileUpload(res.filePath); // Send the filePath to the parent
         console.log("Success", res);
@@ -48,6 +50,7 @@ function FileUpload({ accept, folder, placeholder, type, onFileUpload, backGroun
     };
 
     const onUploadStart = (evt) => {
+        setIsUploading(true);
         console.log("Start", evt);
     };
 
@@ -87,14 +90,24 @@ function FileUpload({ accept, folder, placeholder, type, onFileUpload, backGroun
                     style={{ display: 'none' }} // hide the default input and use the custom upload button
                     ref={ikUploadRefTest}
                 />
-                {ikUploadRefTest && <Button className={`${backGroundColor} text-center w-full text-lg font-bebasNeue mb-4`} onClick={handleButtonClick}>
-                    <Image
-                        src="/icons/upload.svg"
-                        alt="upload-icon"
-                        width={20}
-                        height={20}
-                        className="object-contain"
-                    />{placeholder}</Button>}
+                {ikUploadRefTest && <Button className={`${backGroundColor} text-center w-full text-lg font-bebasNeue mb-4`} onClick={handleButtonClick} disabled={isUploading}>
+                    {isUploading ? (
+                        <>
+                            <span className="animate-spin rounded-full h-4 w-4 border-t-2 border-white border-opacity-50"></span>
+                            Uploading...
+                        </>
+                    ) : (
+                        <>
+                            <Image
+                                src="/icons/upload.svg"
+                                alt="upload-icon"
+                                width={20}
+                                height={20}
+                                className="object-contain"
+                            />
+                            {placeholder}
+                        </>
+                    )}</Button>}
                 {file && <p className="text-white text-center text-sm bg-amber-800 p-2 rounded-lg mb-4">{file?.filePath}</p>}
                 {file &&
                     (type === "image" ? (

@@ -1,8 +1,9 @@
 
 import { AppSidebar } from '@/components/admin/Sidebar'
-import { Input } from '@/components/ui/input'
+import Search from '@/components/Search'
+// import { Input } from '@/components/ui/input'
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
-import { SearchIcon } from 'lucide-react'
+// import { SearchIcon } from 'lucide-react'
 import { Urbanist } from 'next/font/google'
 import React from 'react'
 const urbanist = Urbanist({
@@ -23,13 +24,14 @@ const layout = async ({ children }) => {
                                 Welcome to bookwise, <span className="text-xl font-semibold text-blue-500">Adrian</span>
                             </h1>
                             {/* Search Input */}
-                            <div className="relative w-full lg:ml-[12%] ml-[10%]">
+                            {/* <div className="relative w-full lg:ml-[12%] ml-[10%]">
                                 <SearchIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" size={20} />
                                 <Input
                                     className="ld:w-96 w-[90%] pl-10 pr-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-300 focus:border-blue-500"
                                     placeholder="Search books..."
                                 />
-                            </div>
+                            </div> */}
+                            <Search/>
                         </div>
                     </div>
                     {children}

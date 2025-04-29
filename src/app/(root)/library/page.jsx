@@ -54,13 +54,13 @@ export default function Library() {
         // const email = 'Upstash@gmail.com';
 
         try {
-          const { data } = await axios.get(`/api/userState`);
-          console.log("User status:", data.status);
-          console.log(data);
+            const { data } = await axios.get(`/api/userState`);
+            console.log("User status:", data.status);
+            console.log(data);
         } catch (error) {
-          console.error("Error fetching user status:", error);
+            console.error("Error fetching user status:", error);
         }
-      };
+    };
 
     return (
         <div className="p-4">

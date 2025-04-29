@@ -17,18 +17,20 @@ import { signupSchema } from "@/validators/signup-validator";
 import Link from "next/link";
 import Formerror from "@/components/form-error";
 import Formsuccess from "@/components/form-success";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import FileUpload from "./FileUpload";
 import { saveUser } from "@/lib/drizzleActions";
 import { getFormattedDateTime } from "@/lib/currDate";
+import { useRouter } from "next/navigation";
 
 
 
 export default function SignupForm() {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
-    const [filePath, setFilePath] = useState(''); // State for file path
+    const [filePath, setFilePath] = useState(''); 
+    const router = useRouter();
 
 
 
@@ -37,8 +39,8 @@ export default function SignupForm() {
         defaultValues: {
             email: "",
             password: "",
-            fullName: "", // Added Full Name field
-            universityId: "", // Added University ID field
+            fullName: "", 
+            universityId: "",
         },
     });
 
@@ -47,8 +49,8 @@ export default function SignupForm() {
     const onSubmit = async (values) => {
         const formattedValues = {
             ...values,
-            universityId: parseInt(values.universityId, 10), // Convert to integer
-            libraryCardUrl: filePath, // Include the file path
+            universityId: parseInt(values.universityId, 10), 
+            libraryCardUrl: filePath, 
         };
 
         const response = await saveUser(formattedValues);
@@ -64,6 +66,7 @@ export default function SignupForm() {
                 description: time,
                 status: "success"
             });
+            router.push('/api/auth/signin')
         }
         console.log(formattedValues);
     };
@@ -145,6 +148,7 @@ export default function SignupForm() {
                             </FormItem>
                         )}
                     />
+                    {/* lib-card section */}
                     <div>
                         <FileUpload accept="image/*" folder="books" placeholder="Upload your ID" type="image" backGroundColor={'bg-primary-gold'} onFileUpload={(path) => setFilePath(path)} />
                     </div>
@@ -155,8 +159,8 @@ export default function SignupForm() {
                     </Button>
                 </form>
             </Form>
-            {error && <Formerror message={error} />}
-            {success && <Formsuccess message={success} />}
+            {/* {error && <Formerror message={error} />}
+            {success && <Formsuccess message={success} />} */}
             <p className='mt-4 text-sm text-slate-300'>
                 Already have an account ?
                 <Button variant="link" className='p-1'>
