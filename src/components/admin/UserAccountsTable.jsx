@@ -23,7 +23,7 @@ function UserAccountTable({ userList }) {
                 variant: 'default',
                 success: "true",
             });
-            // Update status locally
+
             setUsers(prev => prev.map(user => user.id === id ? { ...user, status: "APPROVED" } : user));
         } else {
             toast({

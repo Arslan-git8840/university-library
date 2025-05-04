@@ -70,7 +70,6 @@ export const deleteUser = async (id) => {
   }
 };
 
-
 export const addBook = async (data) => {
   try {
     const addedBook = await db.insert(books).values(data);

@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import BookListTable from '@/components/admin/bookListTable'
 import { Button } from '@/components/ui/button'
 import { db } from '@/db/drizzle'
