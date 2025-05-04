@@ -40,7 +40,7 @@ function UserAccountTable({ userList }) {
         if (response.success) {
             toast({
                 title: 'User Deleted',
-                description: 'User has been deleted.',
+                description: 'User has been deleted successfully.',
                 variant: 'default',
                 success: "true",
             });
