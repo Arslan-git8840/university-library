@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import UserAccountTable from '@/components/admin/UserAccountsTable'
 import { db } from '@/db/drizzle'
 import { users } from '@/db/schema'
