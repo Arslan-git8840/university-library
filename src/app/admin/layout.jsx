@@ -1,10 +1,15 @@
 
+import { auth } from '@/auth'
 import { AppSidebar } from '@/components/admin/Sidebar'
 import Search from '@/components/Search'
 // import { Input } from '@/components/ui/input'
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
+import { db } from '@/db/drizzle'
+import { users } from '@/db/schema'
+import { eq } from 'drizzle-orm'
 // import { SearchIcon } from 'lucide-react'
 import { Urbanist } from 'next/font/google'
+import { redirect } from 'next/navigation'
 import React from 'react'
 const urbanist = Urbanist({
     subsets: ['latin'],
@@ -12,6 +17,13 @@ const urbanist = Urbanist({
 })
 
 const layout = async ({ children }) => {
+    // const session = await auth();
+
+    // const user = await db.select().from(users).where(eq(users.email, session.user.email)).limit(1);
+
+    // if (!session || user[0]?.role !== 'ADMIN') {
+    //     redirect('/');
+    // }
     return (
         <div className={`min-h-screen bg-sidebar flex ${urbanist.className}`}>
             <SidebarProvider>
@@ -31,7 +43,7 @@ const layout = async ({ children }) => {
                                     placeholder="Search books..."
                                 />
                             </div> */}
-                            <Search/>
+                            <Search />
                         </div>
                     </div>
                     {children}

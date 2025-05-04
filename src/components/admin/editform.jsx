@@ -19,17 +19,17 @@ import { Textarea } from "@/components/ui/textarea";
 import { Edit3 } from "lucide-react";
 import FileUpload from "../FileUpload";
 import { toast } from "@/hooks/use-toast";
-import { updateBook } from "@/lib/drizzleActions"; 
+import { updateBook } from "@/lib/drizzleActions";
 import { useRouter } from "next/navigation";
 import { Urbanist } from "next/font/google";
 
 const urbanist = Urbanist({
-    subsets: ['latin'],
-    weight: ['500', '600']
+  subsets: ['latin'],
+  weight: ['500', '600']
 })
 
 
-export default function EditForm({id}) {
+export default function EditForm({ id }) {
   const [filePath, setFilePath] = React.useState(""); // State for file path
   const router = useRouter();
   const form = useForm({
@@ -48,7 +48,10 @@ export default function EditForm({id}) {
 
   const onSubmit = async (data) => {
     console.log("Form Data:", data);
-    const response = await updateBook({ ...data, coverUrl: filePath, createdBy: "Arslan" });
+    const response = await updateBook({
+      data: { ...data, coverUrl: filePath, createdBy: "Arslan" },
+      id,
+    });
     form.reset();
     if (response.success) {
       router.refresh();
@@ -98,25 +101,25 @@ export default function EditForm({id}) {
           {/* Title */}
           <div>
             <label htmlFor="title">Title</label>
-            <Input id="title" name="title" placeholder="Enter Book Title" {...form.register('title')} required />
+            <Input id="title" name="title" placeholder="Enter Book Title" {...form.register('title')}  />
           </div>
 
           {/* Author */}
           <div>
             <label htmlFor="author">Author</label>
-            <Input id="author" name="author" placeholder="Enter Author Name" {...form.register('author')} required />
+            <Input id="author" name="author" placeholder="Enter Author Name" {...form.register('author')}  />
           </div>
 
           {/* Genre */}
           <div>
             <label htmlFor="genre">Genre</label>
-            <Input id="genre" name="genre" placeholder="Enter Genre" {...form.register('genre')} required />
+            <Input id="genre" name="genre" placeholder="Enter Genre" {...form.register('genre')}  />
           </div>
 
           {/* Rating */}
           <div>
             <label htmlFor="rating">Rating</label>
-            <Input type="number" step="0.1" id="rating" name="rating" placeholder="Enter Rating (1-5)" {...form.register('rating')} required />
+            <Input type="number" step="0.1" id="rating" name="rating" placeholder="Enter Rating (1-5)" {...form.register('rating')}  />
           </div>
 
           {/* Cover Color */}
@@ -134,13 +137,13 @@ export default function EditForm({id}) {
           {/* Total Copies */}
           <div>
             <label htmlFor="totalCopies">Total Copies</label>
-            <Input type="number" id="totalCopies" name="totalCopies" placeholder="Enter Total Copies" {...form.register('totalCopies')} required />
+            <Input type="number" id="totalCopies" name="totalCopies" placeholder="Enter Total Copies" {...form.register('totalCopies')}  />
           </div>
 
           {/* Available Copies */}
           <div>
             <label htmlFor="availableCopies">Available Copies</label>
-            <Input type="number" id="availableCopies" name="availableCopies" placeholder="Enter Available Copies" {...form.register('availableCopies')} required />
+            <Input type="number" id="availableCopies" name="availableCopies" placeholder="Enter Available Copies" {...form.register('availableCopies')}  />
           </div>
 
           {/* Summary */}
@@ -164,7 +167,7 @@ export default function EditForm({id}) {
           {/* Submit Button */}
           <div className="col-span-2">
             <Button type="submit" className="font-bebasNeue text-lg w-full text-white bg-primary-admin">
-              Add Book
+              Update Book
             </Button>
           </div>
         </form>

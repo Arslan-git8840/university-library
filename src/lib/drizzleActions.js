@@ -98,9 +98,38 @@ export const bookToDelete = async (id) => {
   }
 };
 
+// export const updateBook = async ({ data, id }) => {
+//   try {
+//     await db.update(books).set(data).where(eq(books.id, id));
+//     return {
+//       success: true,
+//     };
+//   } catch (error) {
+//     console.log(error);
+//     return {
+//       success: false,
+//     };
+//   }
+// };
+
 export const updateBook = async ({ data, id }) => {
   try {
-    await db.update(books).set().where(eq(books.id, id));
+    // Remove undefined or null fields from data
+    const cleanData = Object.fromEntries(
+      Object.entries(data).filter(
+        ([_, value]) => value !== undefined && value !== ""
+      )
+    );
+
+    if (Object.keys(cleanData).length === 0) {
+      return {
+        success: false,
+        message: "No valid fields provided for update.",
+      };
+    }
+
+    await db.update(books).set(cleanData).where(eq(books.id, id));
+
     return {
       success: true,
     };
@@ -108,6 +137,7 @@ export const updateBook = async ({ data, id }) => {
     console.log(error);
     return {
       success: false,
+      message: "Database error",
     };
   }
 };
