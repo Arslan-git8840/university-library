@@ -55,17 +55,21 @@ export const updateUser = async (id) => {
 
 export const deleteUser = async (id) => {
   try {
+    console.log("Deleting user with id:", id);
+    await db.delete(borrowRecords).where(eq(borrowRecords.userId, id));
     const user = await db.delete(users).where(eq(users.id, id));
+    console.log("User deleted:", user);
     return {
       success: true,
     };
   } catch (error) {
-    console.log(error);
+    console.log("Error in deleteUser:", error);
     return {
       success: false,
     };
   }
 };
+
 
 export const addBook = async (data) => {
   try {

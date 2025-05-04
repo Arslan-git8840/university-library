@@ -11,7 +11,7 @@ import { updateUser, deleteUser } from "@/lib/drizzleActions";
 import { useRouter } from "next/navigation";
 
 function UserAccountTable({ userList }) {
-    const [users, setUsers] = useState(userList); // Local state for UI updates
+    const [users, setUsers] = useState(userList); 
     const router = useRouter();
 
     const approveUser = async (id) => {
