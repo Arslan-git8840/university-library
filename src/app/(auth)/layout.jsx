@@ -6,12 +6,25 @@ import { users } from "@/db/schema";
 import { eq } from "drizzle-orm";
 const Layout = async ({ children }) => {
 
-    const session = await auth();
-    if (!session) return;
-    // if (session) redirect('/')
+    // const session = await auth();
+    // if (!session) return;
+    // // if (session) redirect('/')
 
-    const dbUser = await db.select().from(users).where(eq(users.email, session.user.email)).limit(1);
-    if (session && dbUser.length > 0) redirect('/')
+    // const dbUser = await db.select().from(users).where(eq(users.email, session.user.email)).limit(1);
+    // if (session && dbUser.length > 0) redirect('/')
+    const session = await auth();
+
+    if (session?.user?.email) {
+        const dbUser = await db
+            .select()
+            .from(users)
+            .where(eq(users.email, session.user.email))
+            .limit(1);
+
+        if (dbUser.length > 0) {
+            redirect("/"); // ✅ Redirect logged-in user to home or dashboard
+        }
+    }
 
 
 
