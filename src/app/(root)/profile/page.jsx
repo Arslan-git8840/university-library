@@ -58,7 +58,7 @@ async function Profile() {
         <form action={async () => {
           'use server'
           await signOut();
-          redirect('/');
+          redirect('/api/auth/signin');
         }}>
           <Button type='submit' className='bg-primary-gold absolute top-[85px] right-10 text-lg font-bebasNeue tracking-wider'>Logout</Button>
         </form>
@@ -88,7 +88,7 @@ async function Profile() {
                 <div className="p-2">
                   <div className='flex items-center gap-3'>
                     {/* Book Title */}
-                    <h2 className="text-base font-semibold text-white">{(borrowedBook.books.title).slice(0,13)}</h2>
+                    <h2 className="text-base font-semibold text-white">{(borrowedBook.books.title).slice(0, 13)}</h2>
                     <span className='text-white'>.</span>
                     {/* Category */}
                     <p className="text-gray-400 text-sm">{borrowedBook.books.genre}</p>

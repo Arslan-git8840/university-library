@@ -17,13 +17,13 @@ const urbanist = Urbanist({
 })
 
 const layout = async ({ children }) => {
-    // const session = await auth();
+    const session = await auth();
 
-    // const user = await db.select().from(users).where(eq(users.email, session.user.email)).limit(1);
+    const user = await db.select().from(users).where(eq(users.email, session.user.email)).limit(1);
 
-    // if (!session || user[0]?.role !== 'ADMIN') {
-    //     redirect('/');
-    // }
+    if (!session || user[0]?.role !== 'ADMIN') {
+        redirect('/');
+    }
     return (
         <div className={`min-h-screen bg-sidebar flex ${urbanist.className}`}>
             <SidebarProvider>
