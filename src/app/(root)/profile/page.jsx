@@ -20,6 +20,7 @@ async function Profile() {
   const session = await auth();
   const response = await db.select().from(users).where(eq(users.id, session?.user?.id));
   const user = response[0];
+  if (!user) redirect('/signup')
 
   return (
     <div className='flex gap-2 lg:flex-row flex-col justify-center mt-12'>

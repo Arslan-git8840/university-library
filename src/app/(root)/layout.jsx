@@ -11,8 +11,8 @@ const urbanist = Urbanist({
 })
 
 const Layout = async ({ children }) => {
-    // const session = await auth();
-    // if(!session) redirect('/signup');
+    const session = await auth();
+    if (!session) redirect('/signup');
     // const userResult = await db
     //   .select()
     //   .from(users)
@@ -22,7 +22,7 @@ const Layout = async ({ children }) => {
     // if(!dbUser) {
     //     await signOut();
     // }
-  
+
 
     return (
         <div className={`min-h-screen bg-cover bg-top bg-dark-100 bg-pattern ${urbanist.className}`}>

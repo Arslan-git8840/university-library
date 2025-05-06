@@ -6,7 +6,8 @@ import { users } from "@/db/schema";
 import { eq } from "drizzle-orm";
 const Layout = async ({ children }) => {
 
-    // const session = await auth();
+    const session = await auth();
+    if (session) redirect('/')
     // if (session) {
     //     const dbUser = await db.select().from(users).where(eq(users.email, session.user.email)).limit(1);
     //     if (dbUser[0].length > 0) {
